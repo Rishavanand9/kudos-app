@@ -18,16 +18,16 @@ from django.contrib import admin
 from django.urls import include, path
 from kudos.views import home
 from rest_framework.routers import DefaultRouter
-from kudos.views import KudoViewSet, UserListView
-
-router = DefaultRouter()
-router.register(r'kudos', KudoViewSet, basename='kudos')
+from kudos.views import KudoViewSet, UserListView, LoginView, logout_view
+from rest_framework.authtoken.views import obtain_auth_token
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('home/', home, name='home'),
-    path('kudos/', include(router.urls)),
+    path('kudos/give/', KudoViewSet.as_view({'post': 'give_kudo'}), name='give-kudo'),
+    path('kudos/recieved/', KudoViewSet.as_view({'get': 'my_kudos'}), name='my-kudos'),
     path('users/', UserListView.as_view(), name='user-list'),
-
+    path('login/', LoginView.as_view(), name='login'),
+    path('logout/', logout_view, name='logout'),
 ]
 

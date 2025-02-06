@@ -3,7 +3,9 @@ from django.http import HttpResponse
 from rest_framework import viewsets, status, generics
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
-from rest_framework.decorators import action
+from rest_framework.decorators import action, api_view
+from rest_framework.authtoken.views import ObtainAuthToken
+from rest_framework.authtoken.models import Token
 from django.utils.timezone import now
 from .models import CustomUser, Kudo
 from .serializers import CustomUserSerializer, KudoSerializer
@@ -54,3 +56,15 @@ class UserListView(generics.ListAPIView):
     queryset = User.objects.all()
     serializer_class = CustomUserSerializer
     permission_classes = [IsAuthenticated]  # Only authenticated users can access this
+
+class LoginView(ObtainAuthToken):
+    def post(self, request, *args, **kwargs):
+        response = super().post(request, *args, **kwargs)
+        token = Token.objects.get(key=response.data['token'])
+        user = token.user
+        return Response({'token': token.key, 'user_id': user.id, 'username': user.username})
+
+@api_view(['POST'])
+def logout_view(request):
+    request.auth.delete()
+    return Response({'message': 'Logout Successfull'})
