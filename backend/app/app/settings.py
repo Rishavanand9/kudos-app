@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'kudos',
     'rest_framework',
     'rest_framework.authtoken',
+    'corsheaders',
 ]
 
 MIDDLEWARE = [
@@ -135,3 +136,6 @@ REST_FRAMEWORK = {
 }
 
 AUTH_USER_MODEL = 'kudos.CustomUser'
+
+ALLOWED_HOSTS=['*']
+CORS_ORIGIN_ALLOW_ALL = True

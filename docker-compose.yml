@@ -5,20 +5,19 @@ services:
   backend:
     build: ./backend
     ports:
-      - "8000:8000"
+      - "8000:8000"  # Expose backend on port 8000
     volumes:
-      - ./backend:/app
+      - ./backend:/app  # Mount backend code (optional for production)
     environment:
-      - DEBUG=1
-      - DJANGO_ALLOWED_HOSTS=localhost,127.0.0.1
-    command: python manage.py runserver 0.0.0.0:8000
+      - DEBUG=0  # Disable debug mode for production
+      - DJANGO_ALLOWED_HOSTS=localhost,127.0.0.1  # Adjust as needed
+    command: gunicorn app.wsgi:application --bind 0.0.0.0:8000  # Start Gunicorn server
 
   frontend:
     build: ./frontend
     ports:
-      - "3000:3000"
+      - "3000:3000"  # Expose frontend on port 3000
     volumes:
-      - ./frontend:/app
-      - /app/node_modules
+      - ./frontend:/app  # Mount frontend code (optional for production)
     depends_on:
-      - backend
+      - backend  # Ensure backend starts before frontend
