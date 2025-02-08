@@ -1,0 +1,38 @@
+.login-container {
+    font-family: Arial, sans-serif;
+    max-width: 600px;
+    margin: 20px auto;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+
+.input-field {
+    width: 80%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-bottom: 10px; 
+}
+
+.error {
+    color: red; 
+    margin-top: 10px;
+    min-height: 25px;
+}
+
+.form-div {
+    display: block;
+    text-align: center;
+    gap: 10px;
+}
+
+.submit {
+    width: 40%;
+    padding: 8px;
+    cursor: pointer;
+    border: none;
+    background-color: rgb(131, 228, 131);
+}
