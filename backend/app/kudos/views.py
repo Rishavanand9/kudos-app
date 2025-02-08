@@ -15,40 +15,6 @@ from django.contrib.auth import get_user_model
 def home(request):
     return HttpResponse("Test Kudos View!")
 
-class KudoViewSet(viewsets.ModelViewSet):
-    queryset = Kudo.objects.all()
-    serializer_class = KudoSerializer
-    permission_classes = [IsAuthenticated]
-
-    @action(detail=False, methods=['post'])
-    def give_kudo(self, request):
-        sender = request.user
-        reciever_id = request.data.get('reciever_id')
-        message = request.data.get('message')
-
-        if sender.kudos_remaining <= 0:
-            return Response({'error': 'No Kudos Remaining'})
-        
-        try:
-            reciever = CustomUser.objects.get(id=reciever_id)
-        except CustomUser.DoesNotExist:
-            return Response({"error": "Reciever not found"}, status=status.HTTP_404_NOT_FOUND)
-        
-        kudo = Kudo.objects.create(sender=sender, reciever=reciever, message=message)
-        sender.kudos.remaining -= 1
-        sender.save()
-
-        return Response(KudoSerializer(kudo).data, status=status.HTTP_201_CREATED)
-    
-    
-    @action(detail=False, methods=['get'])
-    def my_kudos(self, request):
-        user = request.user
-        received_kudos = Kudo.objects.filter(receiver=user)
-        return Response(KudoSerializer(received_kudos, many=True).data)
-
-
-
 User = get_user_model()
 
 # Get list of all users
@@ -74,3 +40,38 @@ class LoginView(ObtainAuthToken):
 def logout_view(request):
     request.auth.delete()
     return Response({'message': 'Logout Successfull'})
+
+class KudoViewSet(viewsets.ModelViewSet):
+    queryset = Kudo.objects.all()
+    serializer_class = KudoSerializer
+    permission_classes = [IsAuthenticated]
+
+    @action(detail=False, methods=['post'])
+    def give_kudo(self, request):
+        sender = request.user
+        recipient_id = request.data.get('recipient_id')
+        message = request.data.get('message')
+
+        if sender.kudos_remaining <= 0:
+            return Response({'error': 'No Kudos Remaining'})
+        
+        try:
+            reciever = CustomUser.objects.get(id=recipient_id)
+        except CustomUser.DoesNotExist:
+            return Response({"error": "Reciever not found"}, status=status.HTTP_404_NOT_FOUND)
+        
+        kudo = Kudo.objects.create(sender=sender, receiver=reciever, message=message)
+        sender.kudos_remaining -= 1
+        sender.save()
+
+        return Response(KudoSerializer(kudo).data, status=status.HTTP_201_CREATED)
+    
+    
+    @action(detail=False, methods=['get'])
+    def my_kudos(self, request):
+        user = request.user
+        received_kudos = Kudo.objects.filter(receiver=user)
+        return Response(KudoSerializer(received_kudos, many=True).data)
+
+
+

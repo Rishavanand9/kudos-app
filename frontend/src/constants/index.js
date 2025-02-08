@@ -11,3 +11,5 @@ export const BASE_URL = 'http://127.0.0.1:8000/'
 
 export const LOGIN_URL = BASE_URL + `login/`
 export const SEARCH_USER_URL = BASE_URL + `users/`
+export const SEND_KUDOS_URL = BASE_URL + `kudos/give/`
+export const GET_USER_KUDOS = BASE_URL + `kudos/recieved/`
