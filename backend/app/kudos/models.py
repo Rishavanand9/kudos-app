@@ -17,7 +17,7 @@ class CustomUser(AbstractUser):
     """Extends Django's default User model with organization and kudos-related fields."""
     organization = models.ForeignKey(
         Organization, 
-        on_delete=models.SET_NULL,  # Prevent user deletion if an organization is removed
+        on_delete=models.SET_NULL, 
         null=True, 
         blank=True
     )

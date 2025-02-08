@@ -2,13 +2,13 @@
 
 /* General styles */
 .kudos-page {
-    font-family: 'Arial', sans-serif;
-    max-width: 800px;
-    margin: 0 auto;
+    font-family: Arial, sans-serif;
+    max-width: 600px;
+    margin: 20px auto;
     padding: 20px;
-    background-color: #f9f9f9;
+    border: 1px solid #ddd;
     border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
   }
   
   /* Header styles */
@@ -31,21 +31,6 @@
   
   .back-link:hover {
     text-decoration: underline;
-  }
-  
-  /* User info styles */
-  .user-info {
-    background-color: #fff;
-    padding: 15px;
-    border-radius: 8px;
-    margin-bottom: 20px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  }
-  
-  .user-info p {
-    margin: 5px 0;
-    font-size: 1rem;
-    color: #555;
   }
   
   /* Kudos list styles */

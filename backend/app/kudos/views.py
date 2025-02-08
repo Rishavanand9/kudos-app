@@ -57,12 +57,18 @@ class UserListView(generics.ListAPIView):
     serializer_class = CustomUserSerializer
     permission_classes = [IsAuthenticated]  # Only authenticated users can access this
 
+    def get_queryset(self):
+        name = self.request.query_params.get('name', None)
+        if(name):
+            return User.objects.filter(username__icontains=name)
+        return super().get_queryset()
+
 class LoginView(ObtainAuthToken):
     def post(self, request, *args, **kwargs):
         response = super().post(request, *args, **kwargs)
         token = Token.objects.get(key=response.data['token'])
         user = token.user
-        return Response({'token': token.key, 'user_id': user.id, 'username': user.username})
+        return Response({'token': token.key, 'id': user.id, 'username': user.username, 'email': user.email, 'organization': user.organization, 'kudos_remaining': user.kudos_remaining })
 
 @api_view(['POST'])
 def logout_view(request):

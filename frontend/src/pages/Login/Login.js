@@ -1,7 +1,7 @@
 // frontend/src/pages/Login.tsx
 import React, { useState } from 'react';
 import axios from 'axios';
-import { LOGIN_URL } from '../../constants/endpoints';
+import { LOGIN_URL } from '../../constants';
 import './styles.css'
 
 const Login = () => {

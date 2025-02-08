@@ -1,31 +1,19 @@
 import React, { useState } from 'react';
 import './styles.css';
+import ProfileCard from '../../components/ProfileCard';
+import { currentUser } from '../../constants';
+import SearchInput from '../../components/SearchInput';
 
 const Dashboard = () => {
     // State management
-    const [searchQuery, setSearchQuery] = useState('');
     const [kudosMessage, setKudosMessage] = useState('');
-    const [currentUser] = useState({
-        name: 'John Doe',
-        email: 'johndoe@example.com',
-        kudosRemaining: 3
-    });
-    const [selectedUser] = useState({
-        name: 'Jane Doe',
-        email: 'janedoe@example.com',
-        kudosRemaining: 5
-    });
+
+    const [selectedUser, setSelectedUser] = useState({});
 
     // Event handlers
     const handleLogout = () => {
-        // Add logout logic here
-        console.log('Logging out...');
-    };
-
-    const handleSearch = (e) => {
-        e.preventDefault();
-        console.log('Searching for:', searchQuery);
-        // Add search logic here
+        sessionStorage.removeItem('userDetails')
+        window.location.reload()
     };
 
     const handleSendKudos = () => {
@@ -34,8 +22,7 @@ const Dashboard = () => {
             return;
         }
         console.log('Sending kudos:', kudosMessage);
-        setKudosMessage(''); // Clear message after sending
-        // Add kudos sending logic here
+        setKudosMessage(''); 
     };
 
     return (
@@ -53,10 +40,7 @@ const Dashboard = () => {
                 </button>
             </header>
 
-            <div className="info-box">
-                <p><strong>Email:</strong> {currentUser.email}</p>
-                <p><strong>Kudos Remaining:</strong> {currentUser.kudosRemaining}</p>
-            </div>
+            <ProfileCard />
 
             <nav className="dashboard-nav">
                 <a 
@@ -68,26 +52,7 @@ const Dashboard = () => {
                 </a>
             </nav>
 
-            <form 
-                className="search-container" 
-                onSubmit={handleSearch}
-            >
-                <input
-                    type="text"
-                    placeholder="Search User..."
-                    className="search-bar"
-                    value={searchQuery}
-                    onChange={(e) => setSearchQuery(e.target.value)}
-                    aria-label="Search users"
-                />
-                <button 
-                    type="submit" 
-                    className="search-btn"
-                    aria-label="Search"
-                >
-                    Search
-                </button>
-            </form>
+            <SearchInput onSelect={setSelectedUser}/>
 
             <div className="user-card">
                 <h3>{selectedUser.name}</h3>
