@@ -1,22 +1,22 @@
-FROM python:3.11-slim
-
-WORKDIR /app
-COPY requirements.txt .
-RUN pip install -r requirements.txt
-
-COPY . .
-CMD ["gunicorn", "--bind", "0.0.0.0:8000", "core.wsgi:application"]# backend/Dockerfile
-FROM python:3.11-slim
+# Use the official Python image
+FROM python:3.10
 
 # Set environment variables
-ENV PYTHONDONTWRITEBYTECODE=1
-ENV PYTHONUNBUFFERED=1
+ENV PYTHONUNBUFFERED=1 \
+    PYTHONDONTWRITEBYTECODE=1 
 
+# Set the working directory inside the container
 WORKDIR /app
-COPY requirements.txt ./
+
+# Copy requirements and install dependencies
+COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
-COPY . .
+# Copy the application code
+COPY app .
 
-# Use Gunicorn for production
-CMD ["gunicorn", "--bind", "0.0.0.0:8000", "app.wsgi:application"]
+# Expose port 8000
+EXPOSE 8000
+
+# Start Gunicorn
+CMD ["gunicorn", "app.wsgi:application", "--bind", "0.0.0.0:8000"]
