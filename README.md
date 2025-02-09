@@ -40,16 +40,17 @@ docker-compose up --build
 This will:
 - Start the Django backend at **http://localhost:8000/admin**
 - Start the React frontend at **http://localhost:80**
-- Start PostgreSQL inside a Docker container
 
 ### Running Without Docker
 
 #### Backend (Django)
 ```sh
-cd backend  
-pip install -r requirements.txt  
+cd backend/
+pip install -r requirements.txt
+cd app/
 python manage.py migrate  
-python manage.py runserver  
+python manage.py createsuperuser  #Create Super User / Admin 
+python manage.py runserver
 ```
 
 #### Frontend (React)
@@ -71,10 +72,15 @@ docker-compose up --build --force-recreate
 
 ### Running Migrations (Django)
 ```sh
-docker exec -it backend python manage.py migrate  
+docker exec -it backend python manage.py migrate
 ```
 
-### Creating a Superuser (Django Admin)
+### Delete existing docker images to clear up space
+```sh
+docker system prune
+```
+
+### Creating a Superuser (Django Admin) via Docker
 ```sh
 docker exec -it backend python manage.py createsuperuser  
 ```
