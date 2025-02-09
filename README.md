@@ -1,77 +1,103 @@
-# Project Name
+# Django React App (Dockerized)
 
-## Overview
+This repository contains a full-stack **Django + React** application running inside Docker containers.
 
-This project consists of a backend and a frontend application, both of which are containerized using Docker. This README provides instructions on how to set up and run the application in a production environment.
+## Features
+- **Backend**: Django (Django REST Framework)
+- **Frontend**: React 
+- **Database**: SQLite (Django's Default)
+- **Containerized** with Docker and Docker Compose
 
-## Prerequisites
+---
 
-- [Docker](https://www.docker.com/get-started) installed on your machine.
-- [Docker Compose](https://docs.docker.com/compose/install/) installed.
-
-## Directory Structure
-
-project-root/
-├── backend/
-│ ├── Dockerfile
-│ ├── requirements.txt
-│ └── (other backend files)
-├── frontend/
-│ ├── Dockerfile
-│ ├── package.json
-│ └── (other frontend files)
-└── docker-compose.yml
-
-
-## Setup Instructions
+## Setup & Installation
 
 ### 1. Clone the Repository
-
-Clone the repository to your local machine:
-
-```
-git clone <repository-url>
-cd project-root
+```sh
+git clone [git@github.com:Rishavanand9/kudos-app.git](https://github.com/Rishavanand9/kudos-app.git)
+cd kudos-app  
 ```
 
+### 2. Environment Variables
+Create a `.env` file in the root directory and add the following variables:
 
-### 2. Build and Run the Application
-
-To build and run the application, execute the following command:
-
-```
-docker-compose up --build
-```
-
-
-This command will:
-
-- Build the Docker images for both the backend and frontend.
-- Start the containers.
-
-### 3. Access the Application
-
-- The backend will be accessible at `http://localhost:8000`.
-- The frontend will be accessible at `http://localhost:3000`.
-
-## Cleaning Up
-
-If you need to delete all old containers and recreate them, follow these steps:
-
-### Stop and Remove All Containers
-
-To stop and remove all containers defined in the `docker-compose.yml`, run:
-
-```
-docker-compose down
+```env
+# Backend
+# Frontend
 ```
 
+---
 
+## Running the Application
 
-### (Optional) Clean Up Unused Images and Volumes
+### Using Docker (Recommended)
+Run the entire stack using Docker Compose:
 
-To clean up unused images and volumes, run:
-
+```sh
+docker-compose up --build  
 ```
-docker system prune -a --volumes
+
+This will:
+- Start the Django backend at **http://localhost:8000/**
+- Start the React frontend at **http://localhost:3000/**
+- Start PostgreSQL inside a Docker container
+
+### Running Without Docker
+
+#### Backend (Django)
+```sh
+cd backend  
+pip install -r requirements.txt  
+python manage.py migrate  
+python manage.py runserver  
 ```
+
+#### Frontend (React)
+```sh
+cd frontend  
+npm install  
+npm start  
+```
+
+---
+
+## Development
+
+### Rebuilding Docker Containers
+If you make changes to dependencies, rebuild the containers:
+```sh
+docker-compose up --build --force-recreate  
+```
+
+### Running Migrations (Django)
+```sh
+docker exec -it backend python manage.py migrate  
+```
+
+### Creating a Superuser (Django Admin)
+```sh
+docker exec -it backend python manage.py createsuperuser  
+```
+
+---
+
+## API Endpoints  
+| Method | Endpoint           | Description            |
+|--------|--------------------|------------------------|
+| POST    | `/login/`            | For Login          |
+| GET   | `/users/` | Users List            |
+| POST   | `/kudos/send/`| Send Kudos     |
+| POST    | `/kudos/recieved/`      | Get Current uSERs Kudos       |
+
+📌 Check the full API documentation by copying api.yaml into https://editor-next.swagger.io/
+
+---
+
+---
+
+## Author  
+- **Rishav Anand** ([@Rishavanand9](https://github.com/Rishavanand9))  
+
+---
+
+Happy coding! 🚀
