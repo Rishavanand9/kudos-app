@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'rest_framework.authtoken',
     'corsheaders',
+    'django_cron',
 ]
 
 MIDDLEWARE = [
@@ -139,3 +140,7 @@ AUTH_USER_MODEL = 'kudos.CustomUser'
 
 ALLOWED_HOSTS=['*']
 CORS_ORIGIN_ALLOW_ALL = True
+
+CRON_CLASSES = [
+    "kudos.cron.ResetKudosCronJob",
+]
