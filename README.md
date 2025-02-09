@@ -38,8 +38,8 @@ docker-compose up --build
 ```
 
 This will:
-- Start the Django backend at **http://localhost:8000/**
-- Start the React frontend at **http://localhost:3000/**
+- Start the Django backend at **http://localhost:8000/admin**
+- Start the React frontend at **http://localhost:80**
 - Start PostgreSQL inside a Docker container
 
 ### Running Without Docker
