@@ -14,7 +14,7 @@ This repository contains a full-stack **Django + React** application running ins
 
 ### 1. Clone the Repository
 ```sh
-git clone [git@github.com:Rishavanand9/kudos-app.git](https://github.com/Rishavanand9/kudos-app.git)
+git clone https://github.com/Rishavanand9/kudos-app.git
 cd kudos-app  
 ```
 
